@@ -1,0 +1,51 @@
+
+// how to use cloudinary for note pdf uploads
+// 1. Install Cloudinary SDK: npm install cloudinary
+// 2. Configure Cloudinary in your server.js or a separate config file:
+
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: 'your_cloud_name',
+  api_key: 'your_api_key',
+  api_secret: 'your_api_secret'
+});
+
+// 3. Create an endpoint to handle file uploads:
+
+app.post('/upload', (req, res) => {
+  const file = req.files.note; // Assuming you're using a middleware like express-fileupload
+
+  cloudinary.uploader.upload(file.tempFilePath, { resource_type: "raw" }, (error, result) => {
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+    res.json({ url: result.secure_url });
+  });
+}); 
+
+
+//data dictionary
+// Student Collection
+// - studentId: String (Unique Identifier)
+// - name: String
+// - class: String
+// - subjects: [String]
+// - learningHistory: [{ date: Date, subject: String, topic: String, score: Number }]
+// - weakAreas: [String]
+// - chatbotInteractions: [{ date: Date, question: String, response: String, feedback: String }]
+
+// Teacher Collection               
+// - teacherId: String (Unique Identifier)  
+// - name: String
+// - subjects: [String]
+// - classes: [String]
+// - performanceAnalytics: [{ date: Date, subject: String, topic: String, averageScore: Number }]
+
+// Content Collection
+// - contentId: String (Unique Identifier)
+// - subject: String
+// - topic: String
+// - contentType: String (video, notes, practice)
+// - difficultyLevel: String (easy, medium, hard)
+// - url: String
