@@ -128,6 +128,7 @@ const topicRoutes = require("./routes/topicRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 const notesRoutes = require("./routes/notesRoutes");
 const lectureRoutes = require("./routes/lectureRoutes");
+const studentProgressRoutes = require("./routes/studentProgressRoutes");
 
 const app = express();
 
@@ -150,6 +151,7 @@ app.use("/topics",topicRoutes)
 app.use("/quizzes", quizRoutes);
 app.use("/notes", notesRoutes);
 app.use("/lectures", lectureRoutes);
+app.use("/progress", studentProgressRoutes);
 
 //folder structure
 // - server.js

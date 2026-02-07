@@ -57,5 +57,6 @@ const getSingleQuiz = async (req, res) => {
 
 module.exports = {
   createQuiz,
-  getQuizByTopic
+  getQuizByTopic,
+  getSingleQuiz
 };
