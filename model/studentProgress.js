@@ -1,37 +1,59 @@
-// Student History
-const studentProgressSchema = new mongoose.Schema({
+const { Schema, model } = require('mongoose');
+
+const studentProgressSchema = new Schema({
   studentId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Student',
     required: true
   },
+
   subjectId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Subject',
     required: true
   },
+
+  // Notes Completed
   completedNotes: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Notes'
   }],
+
+  //Lectures Watched
   watchedLectures: [{
     lectureId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Lecture'
     },
-    // progress: Number 
+    watchedAt: {
+      type: Date,
+      default: Date.now
+    }
   }],
+
+  // Quiz Results (multiple attempts allowed)
   quizResults: [{
     quizId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Quiz'
+    },
+    topicId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Topic'
     },
     score: Number,
     totalMarks: Number,
-    attemptedAt: Date
+    percentage: Number,
+    status: {
+      type: String,
+      enum: ['Pass', 'Fail']
+    },
+    attemptedAt: {
+      type: Date,
+      default: Date.now
+    }
   }]
-});
 
-const StudentProgress = mongoose.model('StudentProgress', studentProgressSchema);
+}, { timestamps: true });
 
-module.exports = { StudentProgress };
+module.exports = model('StudentProgress', studentProgressSchema);

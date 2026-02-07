@@ -123,6 +123,12 @@
 
 const express = require("express");
 const studentRoutes = require("./routes/studentRoutes");
+const subjectRoutes = require("./routes/subjectRoutes");
+const topicRoutes = require("./routes/topicRoutes");
+const quizRoutes = require("./routes/quizRoutes");
+const notesRoutes = require("./routes/notesRoutes");
+const lectureRoutes = require("./routes/lectureRoutes");
+
 const app = express();
 
 const mongoose = require("mongoose");
@@ -137,8 +143,13 @@ app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 });
 
-app.use("/students",require("./routes/studentRoutes"))
 
+app.use("/students", studentRoutes);
+app.use("/subjects", subjectRoutes);
+app.use("/topics",topicRoutes)
+app.use("/quizzes", quizRoutes);
+app.use("/notes", notesRoutes);
+app.use("/lectures", lectureRoutes);
 
 //folder structure
 // - server.js

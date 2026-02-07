@@ -1,5 +1,4 @@
-import { Schema, model } from 'mongoose';
-
+const { Schema, model } = require('mongoose');
 // Subject Schema
 const subjectSchema = new Schema({
   name: {
@@ -23,6 +22,11 @@ const notesSchema = new Schema({
   subjectId: {
     type: Schema.Types.ObjectId,
     ref: 'Subject',
+    required: true
+  },
+  topicId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Topic',
     required: true
   },
   title: {
@@ -55,6 +59,11 @@ const lectureSchema = new Schema({
     ref: 'Subject',
     required: true
   },
+  topicId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Topic',
+    required: true
+  },
   title: {
     type: String,
     required: true
@@ -74,6 +83,11 @@ const quizSchema = new Schema({
   subjectId: {
     type: Schema.Types.ObjectId,
     ref: 'Subject',
+    required: true
+  },
+  topicId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Topic',
     required: true
   },
   title: {
@@ -112,15 +126,36 @@ const quizSchema = new Schema({
   }
 });
 
+//topic schema
+const topicSchema = new Schema({
+  subjectId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Subject',
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  description: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+
 // Create models
 const Subject = model('Subject', subjectSchema);
 const Notes = model('Notes', notesSchema);
 const Lecture = model('Lecture', lectureSchema);
 const Quiz = model('Quiz', quizSchema);
+const Topic = model('Topic', topicSchema);
 
-export default {
+module.exports = {
   Subject,
   Notes,
   Lecture,
   Quiz,
+  Topic
 };
